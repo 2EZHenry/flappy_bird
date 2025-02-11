@@ -7,3 +7,8 @@
 	font-family: "font2";
 	src: url("./gogono-cocoa-mochi-cyrillic.ttf");
 }
+
+@font-face {
+	font-family: "font3";
+	src: url("./upheavtt.ttf");
+}

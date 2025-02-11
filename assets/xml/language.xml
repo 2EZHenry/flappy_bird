@@ -178,7 +178,7 @@
 	</DYNAMIC_PHRASE>
 	<DYNAMIC_PHRASE scene_id="game_tip" item_id="tip"  phrase_id="snitch">
 		<EN>
-			<TEXT>Collect snitches to unlock\nnew heroes</TEXT>
+			<TEXT>Tap to play</TEXT>
 			<SIZE>0</SIZE>		
 		</EN>
 		<FR>
@@ -196,6 +196,28 @@
 		<IT>
 			<TEXT>Raccogli i boccini d'oro\nper sbloccare nuovi eroi</TEXT>
 			<SIZE>0</SIZE>		
+		</IT>
+	</DYNAMIC_PHRASE>
+	<DYNAMIC_PHRASE scene_id="game_tip" item_id="guide"  phrase_id="guide">
+		<EN>
+			<TEXT>Collect at least 20 NIPS to get a chance to win a prize!</TEXT>
+			<SIZE>0</SIZE>		
+		</EN>
+		<FR>
+			<TEXT>Collect at least 20 NIPS to get a chance to win a prize!</TEXT>
+		<SIZE>0</SIZE>		
+		</FR>
+		<DE>
+			<TEXT>Collect at least 20 NIPS to get a chance to win a prize!</TEXT>
+		<SIZE>0</SIZE>		
+		</DE>
+		<ES>
+			<TEXT>Collect at least 20 NIPS to get a chance to win a prize!</TEXT>
+		<SIZE>0</SIZE>		
+		</ES>
+		<IT>
+			<TEXT>Collect at least 20 NIPS to get a chance to win a prize!</TEXT>
+		<SIZE>0</SIZE>		
 		</IT>
 	</DYNAMIC_PHRASE>
 		<DYNAMIC_PHRASE scene_id="game_tip" item_id="tip"  phrase_id="snitch2">
@@ -244,7 +266,7 @@
 	</DYNAMIC_PHRASE>
 		<DYNAMIC_PHRASE scene_id="game_windows" item_id="level_failed"  phrase_id="2">
 		<EN>
-			<TEXT>Second \nChance?</TEXT>
+			<TEXT>Try \nAgain</TEXT>
 			<SIZE>0</SIZE>		
 		</EN>
 		<FR>
@@ -374,6 +396,29 @@
 		</DE>
 		<IT>
 			<TEXT>Continua</TEXT>
+			<SIZE>0</SIZE>		
+		</IT>
+	</DYNAMIC_PHRASE>
+
+	<DYNAMIC_PHRASE scene_id="game_windows" item_id="level_finished"  phrase_id="5">
+		<EN>
+			<TEXT>Play Again</TEXT>
+			<SIZE>0</SIZE>		
+		</EN>
+		<FR>
+			<TEXT>Play Again</TEXT>
+			<SIZE>0</SIZE>		
+		</FR>
+		<ES>
+			<TEXT>Play Again</TEXT>
+			<SIZE>-12</SIZE>		
+		</ES>
+		<DE>
+			<TEXT>Play Again</TEXT>
+			<SIZE>0</SIZE>		
+		</DE>
+		<IT>
+			<TEXT>Play Again</TEXT>
 			<SIZE>0</SIZE>		
 		</IT>
 	</DYNAMIC_PHRASE>

@@ -1,83 +1,449 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
-		<title>Harry's Flight</title>
-		<meta name = "viewport" content = "width = device-width, initial-scale =
-			1.0, maximum-scale = 1.0, minimum-scale = 1.0, user-scalable = 0, minimal-ui" />
-		<style type = "text/css">
-			#phaser_game{
-				padding: 0px;
-				margin: 0px;
-				background: black;
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Flying NIPS - Upload Receipt</title>
+		<style>
+			@import url("https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600&display=swap");
 
+			:root {
+				--candy-red: #ff6b6b;
+				--candy-yellow: #ffd93d;
+				--candy-green: #6bcb77;
+				--candy-blue: #4d96ff;
+				--candy-purple: #b983ff;
+				--candy-pink: #ff9999;
 			}
-			#preload{
-				color: white;
-				text-align:center;
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				
-			}
-			canvas{
-				display:block;
-				z-index: 99;					
-				-webkit-text-stroke: 0.5px black;
-				background: black;
+			* {
+				box-sizing: border-box;
 			}
 
 			body {
-				position: relative;
-				margin: 0 !important;
-			}
-		
-		</style>
+				font-family: "Poppins", sans-serif;
+				margin: 0;
+				height: 100vh;
+				background: linear-gradient(135deg, #ffe5e5, #e5f4ff);
 
-		<meta charset="utf-8">
-		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, user-scalable=no, minimal-ui">
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="full-screen" content="yes" />
-		<meta name="screen-orientation" content="portrait" />
-		<script type="text/javascript">
-			const loading_vars = {
-			'game_id': 'harry_flight',
-			// net id
-			// if you plan to release the game on other olatforms you should change this one
-			// and then build your logic in social_api.js
-			'net_id': 'localhost',
-			'start_time': new Date().getTime(),
-			'orientation': 'portrait',
-			// whether to load compiled JS or source
-			'js_combined': false,
-			// whether to use real backend or local version
-			// this parameter is only present in game_request.js
-			'use_server': false,
-			// width    
-			'W': 640,
-			// height
-			'H': 960
-			};
-		</script>
-		<!-- load fonts -->
-		<link rel="stylesheet" type = "text/css" href = "./assets/fonts/fontLoader1.css">
-		<script type="text/javascript" src="./external/phaser.min.3.60.0.js"></script>
-		<script type="text/javascript" src="./game_request.js"></script>
-		<script type="text/javascript" src="./config.js"></script>
-		<script type="text/javascript" src="./boot.js"></script>
+				display: grid;
+				place-items: center;
+			}
+
+			.container {
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				display: flex;
+				flex-direction: column;
+				max-width: 600px;
+				margin: 0 auto;
+				transform: translate(-50%, -50%);
+				background: rgba(255, 255, 255, 0.95);
+				border-radius: 20px;
+				padding: 30px;
+				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+			}
+
+			h1 {
+				font-family: "Fredoka One", cursive;
+				text-align: center;
+				color: var(--candy-purple);
+				margin-bottom: 30px;
+				font-size: 2.5em;
+			}
+
+			.rainbow-text {
+				background: linear-gradient(
+					to right,
+					var(--candy-red),
+					var(--candy-yellow),
+					var(--candy-green),
+					var(--candy-blue),
+					var(--candy-purple)
+				);
+				-webkit-background-clip: text;
+				background-clip: text;
+				color: transparent;
+				animation: rainbow-move 5s linear infinite;
+			}
+
+			@keyframes rainbow-move {
+				0% {
+					background-position: 0% 50%;
+				}
+				100% {
+					background-position: 200% 50%;
+				}
+			}
+
+			.form-group {
+				position: relative;
+			}
+
+			.input-div {
+				display: flex;
+				flex-direction: column;
+				gap: 30px;
+			}
+
+			label {
+				display: block;
+				margin-bottom: 8px;
+				font-weight: 600;
+				color: var(--candy-purple);
+				font-size: 1.1em;
+			}
+
+			input[type="text"],
+			input[type="email"],
+			input[type="tel"] {
+				width: 100%;
+				padding: 12px;
+				border: 2px solid #e0e0e0;
+				border-radius: 12px;
+				font-size: 1em;
+				transition: all 0.3s ease;
+				font-family: "Poppins", sans-serif;
+			}
+
+			input[type="text"]:focus,
+			input[type="email"]:focus,
+			input[type="tel"]:focus {
+				border-color: var(--candy-blue);
+				box-shadow: 0 0 10px rgba(77, 150, 255, 0.2);
+				outline: none;
+			}
+
+			.file-upload {
+				position: relative;
+				display: inline-block;
+				width: 100%;
+			}
+
+			.file-upload-label {
+				display: block;
+				padding: 15px;
+				background: linear-gradient(
+					45deg,
+					var(--candy-pink),
+					var(--candy-purple)
+				);
+				color: white;
+				border-radius: 12px;
+				text-align: center;
+				cursor: pointer;
+				transition: all 0.3s ease;
+			}
+
+			.file-upload-label:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 5px 15px rgba(185, 131, 255, 0.3);
+			}
+
+			input[type="file"] {
+				display: none;
+			}
+
+			#selectedFileName {
+				margin-top: 8px;
+				text-align: center;
+				color: var(--candy-purple);
+				font-size: 0.9em;
+			}
+
+			/* Updated button styles */
+			button {
+				background: linear-gradient(
+					45deg,
+					var(--candy-blue),
+					var(--candy-purple)
+				);
+				color: white;
+				padding: 15px 30px;
+				border: none;
+				border-radius: 12px;
+				font-size: 1.1em;
+				font-weight: 600;
+				cursor: pointer;
+				width: 100%;
+				transition: all 0.3s ease;
+				font-family: "Poppins", sans-serif;
+			}
+			button:disabled {
+				background: linear-gradient(45deg, #cccccc, #999999);
+				cursor: not-allowed;
+				transform: none;
+				box-shadow: none;
+				opacity: 0.7;
+			}
+
+			button:not(:disabled):hover {
+				transform: translateY(-2px);
+				box-shadow: 0 5px 15px rgba(77, 150, 255, 0.3);
+			}
+
+			button:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 5px 15px rgba(77, 150, 255, 0.3);
+			}
+
+			.candy-decoration {
+				position: fixed;
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				pointer-events: none;
+				z-index: -1;
+			}
+
+			#btn_submit {
+				margin-top: 10px;
+			}
+
+			@keyframes float {
+				0% {
+					transform: translateY(0px);
+				}
+				50% {
+					transform: translateY(-20px);
+				}
+				100% {
+					transform: translateY(0px);
+				}
+			}
+
+			/* Add styles for validation message */
+			.validation-message {
+				text-align: center;
+				color: var(--candy-purple);
+				font-size: 0.9em;
+				margin-top: 10px;
+				min-height: 20px;
+			}
+
+			.skip-div {
+				padding-top: 30px;
+				text-align: center;
+			}
+
+			@media only screen and (max-width: 1199px) {
+				.container {
+					width: 100%;
+				}
+			}
+			@media only screen and (max-width: 991px) {
+				.container {
+				}
+			}
+			@media only screen and (max-width: 768px) {
+				.container {
+					width: 90%;
+				}
+			}
+			@media only screen and (max-width: 590px) {
+			}
+		</style>
 	</head>
 	<body>
-		<div class="font_preload">
-			<span style="font-family: font1;"></span>
+		<div class="container">
+			<h1>Join the <span class="rainbow-text">Colorful</span> Adventure!</h1>
+			<div></div>
+			<form id="uploadForm" onsubmit="">
+				<div class="input-div">
+					<div class="form-group">
+						<label for="name">Your Sweet Name</label>
+						<input
+							type="text"
+							id="name"
+							name="name"
+							required
+							placeholder="Enter your name"
+						/>
+					</div>
+
+					<div class="form-group">
+						<label for="email">Email Address</label>
+						<input
+							type="email"
+							id="email"
+							name="email"
+							required
+							placeholder="your@email.com"
+						/>
+					</div>
+
+					<div class="form-group">
+						<label for="phone">Your Phone Number</label>
+						<input
+							type="tel"
+							id="phone"
+							name="phone"
+							required
+							placeholder="Your Phone Number +60123456789"
+						/>
+					</div>
+
+					<div class="form-group">
+						<div class="file-upload">
+							<label for="receipt" class="file-upload-label">
+								📸 Upload Your Receipt
+							</label>
+							<input
+								type="file"
+								id="receipt"
+								name="receipt"
+								accept="image/*"
+								required
+							/>
+							<div id="selectedFileName"></div>
+						</div>
+					</div>
+				</div>
+				<button id="btn_submit" type="submit" disabled>
+					Start Your Sweet Adventure! 🚀
+				</button>
+				<div class="validation-message">
+					Please fill out all fields to continue
+				</div>
+
+				<div class="skip-div">
+					<a href="#" onclick="redirectToGame()" style="text-align: center"
+						>Click here to skip to game (Testing)</a
+					>
+				</div>
+			</form>
 		</div>
 
-		<div class="font_preload">
-			<span style="font-family: font2;"></span>
-		</div>	
-		
-		<div id="preload">
-		</div>
-		<div id="phaser_game">
-		</div>
+		<script>
+			function redirectToGame() {
+				let name = encodeURIComponent(document.getElementById("name").value);
+				window.location.href = `game.html?name=${name}`;
+			}
+
+			// Create floating candy decorations
+			function createCandyDecoration() {
+				const colors = [
+					"#FF6B6B",
+					"#FFD93D",
+					"#6BCB77",
+					"#4D96FF",
+					"#B983FF",
+					"#FF9999",
+				];
+				const candy = document.createElement("div");
+				candy.className = "candy-decoration";
+				candy.style.background =
+					colors[Math.floor(Math.random() * colors.length)];
+				candy.style.left = Math.random() * window.innerWidth + "px";
+				candy.style.top = -30 + "px";
+				candy.style.animation = `float ${
+					3 + Math.random() * 4
+				}s linear infinite`;
+				document.body.appendChild(candy);
+
+				setTimeout(() => {
+					candy.remove();
+				}, 10000);
+			}
+
+			setInterval(createCandyDecoration, 3000);
+
+			// Form validation
+			const form = document.getElementById("uploadForm");
+			const submitButton = form.querySelector('button[type="submit"]');
+			const validationMessage = document.querySelector(".validation-message");
+
+			function validateForm() {
+				const name = document.getElementById("name").value;
+				const phone = document.getElementById("phone").value;
+				const email = document.getElementById("email").value;
+				const receipt = document.getElementById("receipt").files[0];
+
+				const isValid = name && phone && email && receipt;
+
+				submitButton.disabled = !isValid;
+				validationMessage.style.opacity = isValid ? "0" : "1";
+				validationMessage.textContent = isValid
+					? ""
+					: "Please fill out all fields to continue";
+			}
+
+			// Add event listeners for all form inputs
+			form.querySelectorAll("input").forEach((input) => {
+				input.addEventListener("input", validateForm);
+				input.addEventListener("change", validateForm);
+			});
+
+			// Display filename when a file is selected
+			document
+				.getElementById("receipt")
+				.addEventListener("change", function (e) {
+					const fileName = e.target.files[0]?.name || "No file selected";
+					document.getElementById("selectedFileName").textContent = fileName;
+					validateForm();
+				});
+
+			// Handle form submission
+			form.addEventListener("submit", async function (e) {
+				e.preventDefault();
+
+				// @TODO - redirect to game file for now
+				window.location.href = `game.html?name=${
+					document.getElementById("name").value
+				}`;
+
+				// Disable button and show loading state
+				const submitButton = this.querySelector("button");
+				submitButton.innerHTML = "🍭 Processing...";
+				submitButton.disabled = true;
+
+				try {
+					// Get the image file
+					const imageFile = document.getElementById("receipt").files[0];
+
+					// Convert image to base64 string
+					const imageBase64 = await new Promise((resolve, reject) => {
+						const reader = new FileReader();
+						reader.onload = () => resolve(reader.result.split(",")[1]); // Remove data URL prefix
+						reader.onerror = reject;
+						reader.readAsDataURL(imageFile);
+					});
+
+					// Prepare the request data
+					const requestData = {
+						name: document.getElementById("name").value,
+						description: document.getElementById("phone").value,
+						email: document.getElementById("email").value,
+						images: [imageBase64], // Send as array of base64 strings
+					};
+
+					// Send the request
+					const response = await fetch("http://192.168.195.169:8500/submit/", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify(requestData),
+					});
+
+					if (response.ok) {
+						submitButton.innerHTML = "🎉 Success!";
+						setTimeout(() => {
+							window.location.href = "game.html";
+						}, 1000);
+					} else {
+						const errorData = await response.json();
+						throw new Error(errorData.message || "Submission failed");
+					}
+				} catch (error) {
+					console.error("Error:", error);
+					submitButton.innerHTML = "❌ Error - Try Again";
+					setTimeout(() => {
+						submitButton.innerHTML = "Start Your Sweet Adventure! 🚀";
+						submitButton.disabled = false;
+					}, 2000);
+				}
+			});
+		</script>
 	</body>
 </html>
